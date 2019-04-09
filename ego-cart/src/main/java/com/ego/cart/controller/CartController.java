@@ -36,8 +36,6 @@ public class CartController {
         return "cart";
     }
 
-    //cart/update/num/155278650047023/13.action
-
     @RequestMapping(RequestMappingConstant.Cart.UPDATE_CART)
     @ResponseBody
     public EgoResult update(@PathVariable long id, @PathVariable int num,HttpServletRequest request) {
