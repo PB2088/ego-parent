@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress ALL -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://dubbo.apache.org/schema/dubbo
+       http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <dubbo:application name="dubbo-ego-service"/>
+
+    <!-- 指定注册中心的地址 -->
+    <!--<dubbo:registry address="zookeeper://192.168.48.102:2181?backup=192.168.48.103:2181,192.168.48.104:2181" />-->
+    <dubbo:registry protocol="zookeeper" address="192.168.48.102:2181,192.168.48.103:2181,192.168.48.104:2181"/>
+
+    <!-- 指定通信规则(通信协议、通信端口) -->
+    <dubbo:protocol name="dubbo" port="20880"/>
+
+    <!-- 声明需要暴露的服务接口 ref：指向服务的真正实现对象 -->
+    <!--<dubbo:service interface="com.ego.dubbo.service.TbItemDubboService" ref="tbItemDubboServiceImpl"/>-->
+    <dubbo:service interface="com.ego.dubbo.service.TbItemDubboService" ref="tbItemDubboService" />
+
+    <!-- 和本地bean一样实现服务 -->
+    <!--<bean id="tbItemDubboServiceImpl" class="com.ego.dubbo.service.impl.TbItemDubboServiceImpl" />-->
+    <bean id="tbItemDubboService" class="com.ego.dubbo.service.impl.TbItemDubboServiceImpl" />
+
+    <!-- 商品类目服务 -->
+    <dubbo:service interface="com.ego.dubbo.service.TbItemCategoryDubboService" ref="tbItemCategoryDubboService" />
+    <bean id="tbItemCategoryDubboService" class="com.ego.dubbo.service.impl.TbItemCategoryDubboServiceImpl" />
+
+    <!-- 商品描述服务 -->
+    <dubbo:service interface="com.ego.dubbo.service.TbItemDescDubboService" ref="tbItemDescDubboService" />
+    <bean id="tbItemDescDubboService" class="com.ego.dubbo.service.impl.TbItemDescDubboServiceImpl" />
+
+    <!-- 规则参数服务 -->
+    <dubbo:service interface="com.ego.dubbo.service.TbItemParamDubboService" ref="tbItemParamDubboService" />
+    <bean id="tbItemParamDubboService" class="com.ego.dubbo.service.impl.TbItemParamDubboServiceImpl" />
+
+    <!-- 商品参数服务 -->
+    <dubbo:service interface="com.ego.dubbo.service.TbItemParamItemDubboService" ref="tbItemParamItemDubboService" />
+    <bean id="tbItemParamItemDubboService" class="com.ego.dubbo.service.impl.TbItemParamItemDubboServiceImpl" />
+
+    <!-- 网站内容分类服务 -->
+    <dubbo:service interface="com.ego.dubbo.service.TbContentCategoryDubboService" ref="tbContentCategoryDubboService" />
+    <bean id="tbContentCategoryDubboService" class="com.ego.dubbo.service.impl.TbContentCategoryDubboServiceImpl" />
+
+    <!-- 网站内容服务 -->
+    <dubbo:service interface="com.ego.dubbo.service.TbContentDubboService" ref="tbContentDubboService" />
+    <bean id="tbContentDubboService" class="com.ego.dubbo.service.impl.TbContentDubboServiceImpl" />
+
+    <!-- 用户服务 -->
+    <dubbo:service interface="com.ego.dubbo.service.TbUserDubboService" ref="tbUserDubboService" />
+    <bean id="tbUserDubboService" class="com.ego.dubbo.service.impl.TbUserDubboServiceImpl" />
+
+    <!-- 订单服务 -->
+    <dubbo:service interface="com.ego.dubbo.service.TbOrderDubboService" ref="tbOrderDubboService" />
+    <bean id="tbOrderDubboService" class="com.ego.dubbo.service.impl.TbOrderDubboServiceImpl" />
+
+    <!-- 监控中配置.监控中心协议，如果为protocol="registry"，表示从注册中心发现监控中心地址，否则直连监控中心。 -->
+    <dubbo:monitor protocol="registry"/>
+
+    <!--<import resource="../../applicationContext.xml"/>-->
+    <import resource="classpath:/applicationContext.xml" />
+</beans>
